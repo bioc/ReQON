@@ -1,0 +1,6 @@
+export(ReQON, ReadPosErrorPlot, QualFreqPlot, FWSEplot)
+import(rJava)
+importFrom(graphics, hist, par, plot, lines, legend, text)
+importFrom(grDevices, pdf, dev.off)
+importFrom(stats, glm, median, dnorm, rnorm, dpois)
+importFrom(utils, read.table, write.table)
