@@ -41,6 +41,9 @@ effectiveness of the recalibration on the training set.
 
 For a detailed description of usage, output and images, see the vignette by: 
 browseVignettes("ReQON").
+
+ReQON utilizes various java tools provided by Picard.  For more information on Picard, 
+see http://picard.sourceforge.net
 }
 \value{
 ReQON returns a BAM file, replacing the original quality scores with the 
