@@ -6,7 +6,7 @@ Recalibrate the nucleotide quality scores of either single-end or paired-end nex
 }
 \usage{
 ReQON(in_bam, out_bam, region, max_train = -1, SNP = "", 
-   RefSeq = "", plotname = "", temp_files = 0)
+   RefSeq = "", nerr = 2, nraf = 0.05, plotname = "", temp_files = 0)
 }
 \arguments{
 \item{in_bam}{file name of sorted BAM file of single-end or paired-end aligned sequencing data.  The corresponding index file (.bai file) must be located in 
@@ -23,6 +23,10 @@ the same directory.}
 \item{RefSeq}{file of reference sequence for training set to identify sequencing errors (i.e, nucleotide is error if it does not match RefSeq).  Text or Rdata file (with variable name \dQuote{ref}) with no header and three columns: [1] chromosome, [2] position, [3] reference nucleotide (A,C,G,T).  See note.
 	
   Default: errors are nucleotides not matching major allele(s) for coverage > 2, removing all nucleotides at positions with coverage of 2 or less.}
+\item{nerr}{maximum number of errors tolerated at a genomic position.  Positions with more than \dQuote{nerr} errors may likely be true variants, so
+bases from these positions are removed from the training set.  Default = 2.}
+\item{nraf}{maximum non-reference allele frequency at a genomic position that is allowed.  Positions with non-reference allele frequency greater than
+\dQuote{nraf} are removed from the training set for the same reason as above.  Default = 0.05.}
 \item{plotname}{file name for saving recalibration plots in pdf.  If not specified, plots will not be produced.}
 \item{temp_files}{option for keeping temporary files. 
 	
@@ -60,8 +64,12 @@ that is plotted in the output diagnostic plots. The object variables are:
 the Phred scale.  The first element in the vector corresponds to a quality score of zero.}
 \item{$ErrRatesAfter}{vector of empirical error rates after recalibration, reported on 
 the Phred scale.  The first element in the vector corresponds to a quality score of zero.}
-\item{FWSE}{vector of Frequency-Weighted Squared Error (FWSE) values.  The first element
+\item{$FWSE}{vector of Frequency-Weighted Squared Error (FWSE) values.  The first element
 is FWSE before recalibration and the second element is FWSE after recalibration.}
+\item{$FlagPos}{vector of high-error read positions (above dashed cyan line in top left
+output plot). Each of these positions receives an indicator variable in the model.}
+\item{$coeff}{vector of regression coefficient obtained from training set used to 
+recalibrate entire BAM file.}
 }
 \note{
 Be aware of how the chromosomes are referenced when specifying the training 
@@ -101,7 +109,8 @@ sorted <- sortBam( reads_fn, tempfile() )
 indexBam( sorted )
 reg <- paste( "seq1:1-", len, sep = "" )
 diagnostics <- ReQON( sorted, "Recalibrated_example.bam", reg, 
-   RefSeq = "ref_seq.txt", plotname = "Recalibrated_example_plots.pdf" )
+   RefSeq = "ref_seq.txt", nerr = 20, nraf = 0.25, 
+   plotname = "Recalibrated_example_plots.pdf" )
 
 #Remove temporary file
 unlink( "ref_seq.txt" )

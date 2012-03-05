@@ -1,7 +1,17 @@
-CHANGES in ReQON VERSION 1.1.3
+Note: Due to space limitations, the java source code has not been 
+included with this package.  If you would like to obtain this code, 
+please contact the package maintainer Chris Cabanski at cabanski@email.unc.edu
+
+
+CHANGES in ReQON VERSION 1.2.0
 -------------------------------
 
 NEW FEATURES
 
-	o Output BAM file keeps input header and adds header line:
+	- Output BAM file keeps input header and adds header line:
 		"@CO Quality scores were recalibrated with ReQON." 
+	- Allow threshold options (nerr and nrf) to remove positions from
+		the training set that are likely to contain incorrect error calls.
+		(e.g., novel variants and systematic mapping errors)
+	- diagnostic output now outputs flagged read positions ($FlagPos) and 
+		regression coefficients ($coeff)

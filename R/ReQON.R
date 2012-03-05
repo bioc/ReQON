@@ -1,6 +1,6 @@
 ReQON <-
-function(in_bam, out_bam, region, max_train = -1,
-		SNP = "", RefSeq = "", plotname = "", temp_files = 0){
+function(in_bam, out_bam, region, max_train = -1, SNP = "", 
+		RefSeq = "", nerr = 2, nraf = 0.05, plotname = "", temp_files = 0){
 
   message("\nStart time: ", date(), "\n\n") 
   diagnostics <- list()
@@ -12,7 +12,7 @@ function(in_bam, out_bam, region, max_train = -1,
     bup <- .jnew("org/renci/sequencing/util/BAMUnpacker")
     .jcall(bup, "V", "main",s1)
     dat <- read.table("train_temp.txt",nrows=max_train)  
-
+    unlink("train_temp.txt")
 
   # data set-up
     if(min(dat[,5]) > 32){ 	  
@@ -61,7 +61,6 @@ function(in_bam, out_bam, region, max_train = -1,
 	  w <- c()
 	  snp <- c()	# save memory
     }
-
 
   # calculate sequencing errors 
     message("Determining Sequencing Errors \n")
@@ -126,13 +125,24 @@ function(in_bam, out_bam, region, max_train = -1,
 	  ref <- c()	# save memory
     } 
 
-
+  # remove ambiguous positions (> max(nerr,coverage*nraf) errors)
+    coverage <- rle(dat[,2])
+	thresh <- pmax(nerr, coverage$lengths*nraf)
+	w <- which(Y == 1)
+	r <- rle(dat[w,2])
+    m <- merge(coverage$values,cbind(r$values,matrix(1,length(r$values),1)),by=c(1),all.x=T)	  
+       w <- which(!is.na(m[,2])==1)	
+	w <- which(r$lengths > thresh[w])
+	s <- r$values[w]
+    m <- merge(dat[,2],cbind(s,s=1),by=c(1),all.x=T)
+	useless <- (useless | !is.na(m[,2]))
+	
   # calculate error rate
-    if(sum(useless)>0){
+#    if(sum(useless)>0){
       w <- which(useless == 1)
       Y <- Y[-w]
       dat <- dat[-w,]
-	}
+#	}
 	w <- c()
 	useless <- c()
     err <- sum(Y) / length(Y)
@@ -167,6 +177,7 @@ function(in_bam, out_bam, region, max_train = -1,
     X <- cbind(dat[,5], 1*(dat[,5] == 0), dat[,6], baseI, dat[,3], flag) 
 	baseI <- c()		# save memory
     flag <- c()
+	dat <- c()
 
   
   # fit logistic regression
@@ -187,6 +198,8 @@ function(in_bam, out_bam, region, max_train = -1,
 
 
   # save coefficients and flagged positions
+    diagnostics$FlagPos <- FlagPos
+	diagnostics$coeff <- coeff  
     write.table(FlagPos,file="FlagPos.txt",sep="\t",quote=FALSE,row.names = FALSE,col.names = FALSE)
     write.table(coeff,file="Coeff.txt",sep="\t",quote=FALSE,row.names = FALSE,col.names = FALSE)
 
@@ -206,7 +219,7 @@ function(in_bam, out_bam, region, max_train = -1,
 	
   # calculate empirical error rates
     flag <- which(Y==1)
-    h <- hist(dat[flag,5],breaks=c(-1:maxqc),plot=FALSE)
+    h <- hist(X[flag,1],breaks=c(-1:maxqc),plot=FALSE)
     Nbefore_err <- h$counts
     diagnostics$ErrRatesBefore <- -10*log10(Nbefore_err / (diagnostics$QualFreqBefore*counts))
 	diagnostics$ErrRatesBefore[diagnostics$ErrRatesBefore > maxqc] <- maxqc
@@ -273,7 +286,6 @@ function(in_bam, out_bam, region, max_train = -1,
 
 	
   # delete temporary files
-    unlink("train_temp.txt")
     if(temp_files == 0){
       message("Deleting temporary files \n")
       unlink("FlagPos.txt")

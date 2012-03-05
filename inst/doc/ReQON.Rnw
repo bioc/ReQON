@@ -78,18 +78,27 @@ write.table( ref, file = "ref_seq.txt", sep = "\t", quote = FALSE,
 When specifying SNP or RefSeq files, there are available R packages that provide much of the needed information.  For human, see 
 \texttt{SNPlocs.Hsapiens.dbSNP.20101109} for dbSNP version 132 positions and \texttt{BSgenome.Hsapiens.UCSC.hg19} for hg19 reference sequence.
 
+It is possible when working with complex genomes with a lot of variability that some bases in the training set identified as sequencing errors are
+actually correct.  For example, this may be a novel variant or a systematic mapping error.  In an attempt to remedy this issue, we set two different 
+thresholds to remove positions from the training set most likely to contain incorrect error calls.  First, we remove any positions with a 
+non-reference (error) allele frequency greater than \texttt{nraf} (default = 0.05).  Second, we remove positions with more than \texttt{nerr} 
+called errors (default = 2).  These thresholds set a maximum number of allowable called errors for positions with low coverage and a maximum 
+frequency of non-reference (error) bases for positions with high coverage. 
+
 Since this example BAM file is very small, we will train the model on the entire data set.  For large data sets containing over one hundred million 
 reads, which are becoming increasingly common, we suggest training the model on at least 10 million bases (\texttt{max\_train} > 10,000,000).  In 
-practice, we have obtained very accurate results by training on approximately 30 million bases.
+practice, we have obtained very accurate results by training on approximately 25 million bases.
 
-For this tutorial, we would like to train on the entire BAM file (\texttt{region} = seq1:1-len), supply a reference sequence (\texttt{RefSeq}) and 
-plot the results (\texttt{plotname}).  We will save the diagnostic data output as \texttt{diagnostics}.
+For this tutorial, we would like to train on the entire BAM file (\texttt{region} = seq1:1-len), supply a reference sequence (\texttt{RefSeq}), set
+error thresholds (\texttt{nerr} = 20, \texttt{nraf} = 0.25) and plot the results (\texttt{plotname}).  We will save the diagnostic data output as 
+\texttt{diagnostics}.
 
 <<fig=FALSE>>=
 # set training region
 reg <- paste( "seq1:1-", len, sep = "" )
 diagnostics <- ReQON( sorted, "Recalibrated_example.bam", region = reg, 
-   RefSeq = "ref_seq.txt", plotname = "Recalibrated_example_plots.pdf" )
+   RefSeq = "ref_seq.txt", nerr = 20, nraf = 0.25, 
+   plotname = "Recalibrated_example_plots.pdf" )
 
 # delete reference sequence file	
 unlink( "ref_seq.txt" )
@@ -135,7 +144,7 @@ ReadPosErrorPlot( diagnostics$ReadPosErrors )
 The top right plot shows relative frequency distributions of the quality scores both before (blue) and after (red) recalibration.  Notice that the 
 recalibrated quality scores tend to have a larger spread than the original scores.  In this specific example, we can see that 
 25\% of the original quality scores had a value of 40, corresponding to an error rate of 1 in 10,000 nucleotides.  After recalibration, the largest 
-peak is just below 30 (corresponding to an error rate of approximately 1 in 1,000), with less than 10\% of the nucleotides assigned this value.
+peak is around 35 (corresponding to an error rate of approximately 3 in 10,000), with less than 10\% of the nucleotides assigned this value.
 
 This plot can also be produced using the vectors \texttt{\$QualFreqBefore} and \texttt{\$QualFreqAfter} and the plotting function 
 \texttt{QualFreqPlot}.
@@ -158,8 +167,8 @@ accurately reflect the probability of a sequencing error, then FWSE should be cl
 
 The before and after recalibration FWSE scores can be compared and we see that for this example, the quality scores more accurately reflect the true 
 sequencing error rate after recalibration, reflected by the much smaller FWSE score.  Remember that this example data set was very small (< 500,000 
-nucleotides).  Even with this small training size, we see a huge drop in FWSE.  If we had a larger training set, we would expect FWSE to drop even 
-more.
+nucleotides).  Even with this small training size, we see a significant decrease in FWSE.  If we had a larger training set, we would expect FWSE to 
+decrease even more.
 
 This plot can also be produced using the vectors \texttt{\$ErrRateBefore} and \texttt{\$ErrRateAfter} and the plotting function \texttt{FWSEplot}.
 <<fig=FALSE>>=
