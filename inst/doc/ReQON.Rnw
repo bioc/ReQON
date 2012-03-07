@@ -81,11 +81,11 @@ When specifying SNP or RefSeq files, there are available R packages that provide
 It is possible when working with complex genomes with a lot of variability that some bases in the training set identified as sequencing errors are
 actually correct.  For example, this may be a novel variant or a systematic mapping error.  In an attempt to remedy this issue, we set two different 
 thresholds to remove positions from the training set most likely to contain incorrect error calls.  First, we remove any positions with a 
-non-reference (error) allele frequency greater than \texttt{nraf} (default = 0.05).  Second, we remove positions with more than \texttt{nerr} 
-called errors (default = 2).  These thresholds set a maximum number of allowable called errors for positions with low coverage and a maximum 
-frequency of non-reference (error) bases for positions with high coverage. 
+non-reference (error) allele frequency greater than \texttt{nraf} (default = 0.05).  Second, if the coverage at a position times \texttt{nraf} is 
+less than \texttt{nerr}, we remove positions with more than \texttt{nerr} called errors (default = 2).  These thresholds set a maximum number of 
+allowable called errors for positions with low coverage (\texttt{nerr}) and a maximum frequency of non-reference (error) bases for positions with high coverage (\texttt{nraf}). 
 
-Since this example BAM file is very small, we will train the model on the entire data set.  For large data sets containing over one hundred million 
+Since this example BAM file is very small, we will train the model on the entire data set.  For large data sets containing hundreds of  millions of 
 reads, which are becoming increasingly common, we suggest training the model on at least 10 million bases (\texttt{max\_train} > 10,000,000).  In 
 practice, we have obtained very accurate results by training on approximately 25 million bases.
 
@@ -168,7 +168,8 @@ accurately reflect the probability of a sequencing error, then FWSE should be cl
 The before and after recalibration FWSE scores can be compared and we see that for this example, the quality scores more accurately reflect the true 
 sequencing error rate after recalibration, reflected by the much smaller FWSE score.  Remember that this example data set was very small (< 500,000 
 nucleotides).  Even with this small training size, we see a significant decrease in FWSE.  If we had a larger training set, we would expect FWSE to 
-decrease even more.
+decrease even more.  In practice, when recalibrating large BAM files and training on approximately 25 million bases, we commonly see FWSE decrease 
+by over 90%.
 
 This plot can also be produced using the vectors \texttt{\$ErrRateBefore} and \texttt{\$ErrRateAfter} and the plotting function \texttt{FWSEplot}.
 <<fig=FALSE>>=
