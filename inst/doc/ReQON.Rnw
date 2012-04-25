@@ -161,9 +161,9 @@ $45^\circ$ line.
 
 To get a better sense of how closely the points are to the $45^\circ$ line, each plot also reports the Frequency-Weighted Squared Error (FWSE).  
 FWSE is calculated by squaring the vertical distance between each point and the $45^\circ$ line (the error), weighting this squared error by the 
-relative frequency (shown in the top right plot), then summing over all points.  To help visualize which points have a small relative frequency, and 
-thus do not have a large contribution to FWSE, any point with relative frequency less than 0.1\% is denoted by a solid dot.  If the quality scores 
-accurately reflect the probability of a sequencing error, then FWSE should be close to zero.
+relative frequency (shown in the top right plot), then summing over all points.  To help visualize which 
+points have a small relative frequency, and thus do not have a large contribution to FWSE, points are shaded according to their relative frequency.  
+If the quality scores accurately reflect the probability of a sequencing error, then FWSE should be close to zero.
 
 The before and after recalibration FWSE scores can be compared and we see that for this example, the quality scores more accurately reflect the true 
 sequencing error rate after recalibration, reflected by the much smaller FWSE score.  Remember that this example data set was very small (< 500,000 
