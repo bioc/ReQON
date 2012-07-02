@@ -19,11 +19,13 @@ function(in_bam, out_bam, region, max_train = -1, SNP = "",
       dat[,5] <- dat[,5] - 33
       dat[,6] <- dat[,6] - 33
     }
-    if(min(dat[1:1000,3])==0){
-      dat[,3] <- dat[,3] + 1
-    }
-    readlen <- max(dat[,3])   
-    dat[,3] <- abs(dat[,3]-(readlen + 1)*(dat[,7] == '-')) 
+	startpos <- min(dat[1:1000,3]) 
+	endpos <- max(dat[1:1000,3])
+	readlen <- endpos - startpos + 1 
+	if (startpos == 0) {
+		dat[,3] <- dat[,3] + 1
+	}
+	dat[,3] <- abs(dat[,3]-(readlen + 1)*(dat[,7] == '-'))
 	message("\nNumber of bases in training set: ", dim(dat)[1], "\n")
 	
 	
@@ -158,9 +160,10 @@ function(in_bam, out_bam, region, max_train = -1, SNP = "",
 
   # find flagged positions
     FlagPos <- c() 
+	pos <- c(1:readlen) 
     for(i in 1:readlen){
       if(diagnostics$ReadPosErrors[i] > 1.5*(sum(Y)/readlen)){ 
-        FlagPos <- c(FlagPos,i)
+        FlagPos <- c(FlagPos,pos[i])
       }
     }
 
@@ -258,7 +261,7 @@ function(in_bam, out_bam, region, max_train = -1, SNP = "",
         par(mfrow=c(2,2))
 
       # plot (1,1) - errors by read position
-        ReadPosErrorPlot(diagnostics$ReadPosErrors)
+        ReadPosErrorPlot(diagnostics$ReadPosErrors, startpos = startpos)
  
       # plot (1,2) - distribution of scores
 		QualFreqPlot(diagnostics$QualFreqBefore, diagnostics$QualFreqAfter)

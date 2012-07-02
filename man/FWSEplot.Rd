@@ -2,20 +2,21 @@
 \alias{FWSEplot}
 \title{Plot reported vs. empirical quality.}
 \description{
-Plots reported vs. empirical quality scores. Also calculates and outputs Frequency-Weighted Squared Error (FWSE) and reports FWSE on the plot.
+Plots reported vs. empirical quality scores. Also calculates and outputs Frequency-Weighted Squared Error (FWSE) and reports FWSE on the plot. The points are shaded according to the relative frequency of bases assigned that quality score.
 }
 \usage{
-FWSEplot(ErrRates, QualFreq, FWSE_out = TRUE, col = "blue", min_freq = 0.001, 
-   lim = c(0, length(QualFreq) - 1), xlabel = "Reported Quality", 
+FWSEplot(ErrRates, QualFreq, FWSE_out = TRUE, col = "blue", max_freq = 0.25, 
+   lim = c(0, length(QualFreq) - 1), collegend = TRUE, xlabel = "Reported Quality", 
    ylabel = "Empirical Quality", main_title = "Reported vs. Empirical Quality")
 }
 \arguments{
 \item{ErrRates}{vector of empirical error rates on the Phred scale.}
 \item{QualFreq}{vector of relative frequencies of quality scores.}
 \item{FWSE_out}{option to output FWSE and report FWSE on the plot. Default = TRUE.}
-\item{col}{color of plotted points. Default = "blue".}
-\item{min_freq}{Any quality scores with relative frequency less than this vlue will be plotted with a solid point. Default = 0.001.}
+\item{col}{color of plotted points. Currently allows for only "blue" and "red". Default = "blue".}
+\item{max_freq}{Maximum value for color scale, where all quality scores with relative frequency greater than this value are shaded the darkest color. Because the colors are evenly distributed between 0 and max_freq, changing this maximum value may change the color of many points. Default = 0.25.}
 \item{lim}{common axis limits for both the x-axis and y-axis. Default = c(0, length(QualFreq) - 1).}
+\item{collegend}{include color legend. Default = TRUE.}
 \item{xlabel}{x-axis label. Default = "Reported Quality".}
 \item{ylabel}{y-axis label. Default = "Empirical Quality".}
 \item{main_title}{title.  Default = "Reported vs. Empirical Quality".}

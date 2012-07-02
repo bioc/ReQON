@@ -8,9 +8,12 @@
 \maketitle
 \SweaveOpts{keep.source=TRUE}
 
+
 \section{Summary}
 \texttt{ReQON} is a tool for recalibrating the nucleotide quality scores for aligned sequence data in BAM format.  
-This document provides a tutorial of how to use \texttt{ReQON}.
+This document provides a tutorial of how to use \texttt{ReQON}.  
+\textbf{THERE HAVE BEEN SEVERAL CRITICAL UPDATES TO THE ReQON SOFTWARE.  MAKE SURE THAT YOU HAVE DOWNLOADED AND ARE RUNNING ReQON VERSION 1.3.7 
+OR GREATER TO ACHIEVE ALL FUNCTIONALITY DESCRIBED IN THIS TUTORIAL.}
 
 \section{Introduction}
 Next-generation sequencing technologies have become important tools for genome-wide studies.  Each nucleotide that is called is reported with a 
@@ -131,13 +134,13 @@ which may be due to issues with the sequencer at a specific cycle.  Our recalibr
 positions have many errors by adding additional variables to the model for all read positions that are above a threshold (the dashed cyan line at 
 1.5 times the average number of errors per read position).  For this example, the majority of the sequencing errors occur after read position 25.
 
-This plot can also be produced using the vector \texttt{\$ReadPosErrors} and the plotting function \texttt{ReadPosErrorPlot}.
+This plot can also be produced using the vector \texttt{\$ReadPosErrors} and the plotting function \texttt{ReadPosErrorPlot}.  Wwe will set the \texttt{startpos} option to 0 because we want the read positions to begin at 0 (as opposed to 1).
 <<fig=FALSE>>=
 # show the error counts by read position
 diagnostics$ReadPosErrors
 
 # plot
-ReadPosErrorPlot( diagnostics$ReadPosErrors )
+ReadPosErrorPlot( diagnostics$ReadPosErrors, startpos = 0 )
 @
 
 \subsection{Frequency Distribution of Quality Scores}
@@ -161,9 +164,9 @@ $45^\circ$ line.
 
 To get a better sense of how closely the points are to the $45^\circ$ line, each plot also reports the Frequency-Weighted Squared Error (FWSE).  
 FWSE is calculated by squaring the vertical distance between each point and the $45^\circ$ line (the error), weighting this squared error by the 
-relative frequency (shown in the top right plot), then summing over all points.  To help visualize which points have a small relative frequency, and 
-thus do not have a large contribution to FWSE, any point with relative frequency less than 0.1\% is denoted by a solid dot.  If the quality scores 
-accurately reflect the probability of a sequencing error, then FWSE should be close to zero.
+relative frequency (shown in the top right plot), then summing over all points.  To help visualize which 
+points have a small relative frequency, and thus do not have a large contribution to FWSE, points are shaded according to their relative frequency.  
+If the quality scores accurately reflect the probability of a sequencing error, then FWSE should be close to zero.
 
 The before and after recalibration FWSE scores can be compared and we see that for this example, the quality scores more accurately reflect the true 
 sequencing error rate after recalibration, reflected by the much smaller FWSE score.  Remember that this example data set was very small (< 500,000 
@@ -200,6 +203,11 @@ training region.  This option is useful if you want to train on e.g. the first 5
 \section{Troubleshooting}
 This section descibes issues that may arise when running \texttt{ReQON} and how to solve these issues.
 \begin{enumerate}
+
+\item \textbf{Error in ReQON. Unused argument(s) (nerr = 2, nraf = 0.05).}  You are most likely running an out-of-date version of ReQON.  Parameters 
+\texttt{nerr} and \texttt{nraf} were added in version 1.3.0.  We strongly recommend using version 1.3.7 or later as some earlier verions are not fully
+stable.  To check the version of ReQON installed on your computer, use the R command \texttt{citation("ReQON")}.  The latestst version of ReQON can 
+be downloaded at http://bioconductor.org/packages/devel/bioc/html/ReQON.html.}
 
 \item \textbf{WARNING: This BAM's header does not say it is sorted (perhaps it was sorted by samtools?)} This error occurs if either your BAM file 
 is not sorted, or it was sorted using \texttt{SAMTools}.  If it was sorted using \texttt{SAMTools}, you can ignore this error, as this warning 

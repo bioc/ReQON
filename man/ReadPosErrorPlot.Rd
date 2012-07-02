@@ -5,12 +5,13 @@
 Plots the number of sequencing errors by read position.
 }
 \usage{
-ReadPosErrorPlot(ReadPosErrors, error_col = "blue", thresh = 1.5, 
+ReadPosErrorPlot(ReadPosErrors, startpos = 1, error_col = "blue", thresh = 1.5, 
    thresh_col = "cyan", xlabel = "Read Position", ylabel = "# Errors", 
    main_title = "Distribution of Errors by Read Position")
 }
 \arguments{
 \item{ReadPosErrors}{vector of sequencing error counts by read position.}
+\item{startpos}{Starting read position, typically 0 or 1. Default = 1.}
 \item{error_col}{color of line plotting the errors counts. Default = "blue".}
 \item{thresh}{Threshold for identifying read positions with large numbers of errors, plotted as a horizontal dashed line. Threshold is set as ``thresh * (average number of errors per read position)''. Default = 1.5.}
 \item{thresh_col}{color of threshold line. Default = "cyan".}
