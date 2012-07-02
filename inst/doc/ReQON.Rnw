@@ -12,7 +12,7 @@
 \section{Summary}
 \texttt{ReQON} is a tool for recalibrating the nucleotide quality scores for aligned sequence data in BAM format.  
 This document provides a tutorial of how to use \texttt{ReQON}.  
-\textbf{THERE HAVE BEEN SEVERAL CRITICAL UPDATES TO THE ReQON SOFTWARE.  MAKE SURE THAT YOU HAVE DOWNLOADED AND ARE RUNNING ReQON VERSION 1.3.5 
+\textbf{THERE HAVE BEEN SEVERAL CRITICAL UPDATES TO THE ReQON SOFTWARE.  MAKE SURE THAT YOU HAVE DOWNLOADED AND ARE RUNNING ReQON VERSION 1.3.6 
 OR GREATER TO ACHIEVE ALL FUNCTIONALITY DESCRIBED IN THIS TUTORIAL.}
 
 \section{Introduction}
@@ -205,7 +205,7 @@ This section descibes issues that may arise when running \texttt{ReQON} and how 
 \begin{enumerate}
 
 \item \textbf{Error in ReQON. Unused argument(s) (nerr = 2, nraf = 0.05).}  You are most likely running an out-of-date version of ReQON.  Parameters 
-\texttt{nerr} and \texttt{nraf} were added in version 1.3.0.  We strongly recommend using version 1.3.5 or later as some earlier verions are not fully
+\texttt{nerr} and \texttt{nraf} were added in version 1.3.0.  We strongly recommend using version 1.3.6 or later as some earlier verions are not fully
 stable.  To check the version of ReQON installed on your computer, use the R command \texttt{citation("ReQON")}.  The latestst version of ReQON can 
 be downloaded at http://bioconductor.org/packages/devel/bioc/html/ReQON.html.}
 
