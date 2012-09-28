@@ -2,6 +2,16 @@ Note: Due to space limitations, the java source code has not been
 included with this package.  If you would like to obtain this code, 
 please contact the package maintainer Chris Cabanski at ccabansk@dom.wustl.edu
 
+September 4, 2012
+-----------------
+Our manuscript describing this package has been published in BMC Bioinformatics.
+Refer to this paper for further description of the ReQON algorithm and a comparison 
+with other quality score recalibration algorithms.  Please cite this paper if you
+use our package.
+    Cabanski CR et al. (2012) ReQON: a Bioconductor package for recalibrating quality 
+    scores from next-generation sequencing data. BMC Bioinformatics 13(221). 
+	doi:10.1186/1471-2105-13-221.
+
 
 CHANGES in ReQON VERSION 1.2.0
 -------------------------------
@@ -44,3 +54,4 @@ BUG FIXES
 	- There were minor inconsistencies between the FWSE reported in the output 
 		plots and FWSE calculated from the recalibrated BAM file, which has now
 		been fixed.
+		
