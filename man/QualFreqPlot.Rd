@@ -26,7 +26,7 @@ QualFreqPlot plots the relative frequency distribution of quality scores before 
 For more details and interpretation, see the vignette by: 
 browseVignettes("ReQON").
 }
-\author{Christopher Cabanski \email{cabanski@email.unc.edu}}
+\author{Christopher Cabanski \email{ccabansk@genome.wustl.edu}}
 \examples{
 ## Create data of frequencies
 require( stats )

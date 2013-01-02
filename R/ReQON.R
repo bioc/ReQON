@@ -19,8 +19,8 @@ function(in_bam, out_bam, region, max_train = -1, SNP = "",
       dat[,5] <- dat[,5] - 33
       dat[,6] <- dat[,6] - 33
     }
-	startpos <- min(dat[1:1000,3]) 
-	endpos <- max(dat[1:1000,3])
+	startpos <- min(dat[,3]) 
+	endpos <- max(dat[,3])
 	readlen <- endpos - startpos + 1 
 	if (startpos == 0) {
 		dat[,3] <- dat[,3] + 1

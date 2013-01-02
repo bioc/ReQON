@@ -30,7 +30,7 @@ browseVignettes("ReQON").
 \value{
 In addition to the plot, FWSEplot calculates and outputs Frequency-Weighted Squared Error (FWSE), a measure of how close the points lie to the 45-degree line. 
 }
-\author{Christopher Cabanski \email{cabanski@email.unc.edu}}
+\author{Christopher Cabanski \email{ccabansk@genome.wustl.edu}}
 \examples{
 ## Create relative frequency example data
 require( stats )

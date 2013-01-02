@@ -81,7 +81,7 @@ only covers the positions in the training region.  For example, if you set
 region = \dQuote{chr10:1-2000}, then we recommend only having rows 
 corresponding to chr10:1-2000 in the RefSeq/SNP file.
 }
-\author{Christopher Cabanski \email{cabanski@email.unc.edu}}
+\author{Christopher Cabanski \email{ccabansk@genome.wustl.edu}}
 \examples{
 ## Read in sample data from seqbias package
 library( ReQON )

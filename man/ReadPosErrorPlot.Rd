@@ -25,7 +25,7 @@ ReadPosErrorPlot plots the distribution of sequencing errors by read position.  
 For more details and interpretation, see the vignette by: 
 browseVignettes("ReQON").
 }
-\author{Christopher Cabanski \email{cabanski@email.unc.edu}}
+\author{Christopher Cabanski \email{ccabansk@genome.wustl.edu}}
 \examples{
 ## Create data of error counts 
 x <- c( 1:30 )
