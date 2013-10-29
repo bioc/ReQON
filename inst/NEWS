@@ -2,6 +2,12 @@ Note: Due to space limitations, the java source code has not been
 included with this package.  If you would like to obtain this code, 
 please contact the package maintainer Chris Cabanski at ccabansk@dom.wustl.edu
 
+CHANGES in ReQON VERSION 1.9.1
+-------------------------------	
+
+	- Minor changes were made to the vignette.
+
+
 September 4, 2012
 -----------------
 Our manuscript describing ReQON has been published in BMC Bioinformatics.
@@ -12,6 +18,7 @@ use our package.
     scores from next-generation sequencing data. BMC Bioinformatics 13(221). 
 	doi:10.1186/1471-2105-13-221.
 
+
 CHANGES in ReQON VERSION 1.5.0
 -------------------------------	
 
@@ -20,6 +27,7 @@ BUG FIXES
 	- Some users were receiving errors from hist.default(), which depended on the 
 		training region specified.  This has been fixed.
 		
+
 CHANGES in ReQON VERSION 1.3.4
 -------------------------------		
 
@@ -38,6 +46,7 @@ BUG FIXES
 		plots and FWSE calculated from the recalibrated BAM file, which has now
 		been fixed.
 
+
 CHANGES in ReQON VERSION 1.3.2
 -------------------------------
 
@@ -49,6 +58,7 @@ NEW FEATURES
 		according to the relative frequency of bases assigned that quality score.
 		See the reference manual for more details.
 		
+
 CHANGES in ReQON VERSION 1.2.0
 -------------------------------
 
