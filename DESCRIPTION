@@ -1,15 +1,15 @@
 Package: ReQON
 Type: Package
 Title: Recalibrating Quality Of Nucleotides
-Version: 1.9.1
+Version: 1.9.2
 Date: 2013-10-29
 Author: Christopher Cabanski, Keary Cavin, Chris Bizon
 Maintainer: Christopher Cabanski <ccabansk@genome.wustl.edu>
-Description: Algorithm for recalibrating the base quality scores
-	for aligned sequencing data in BAM format.
+Description: Algorithm for recalibrating the base quality scores for
+        aligned sequencing data in BAM format.
 License: GPL-2
-biocViews: Sequencing, HighThroughputSequencing, Preprocessing, QualityControl
 Imports: rJava, graphics, stats, utils, grDevices
 Depends: R (>= 3.0.2), Rsamtools, seqbias
 Suggests: BiocStyle
 SystemRequirements: Java version >= 1.6
+biocViews: Sequencing, Sequencing, Preprocessing, QualityControl
