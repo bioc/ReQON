@@ -1,7 +1,7 @@
 Package: ReQON
 Type: Package
 Title: Recalibrating Quality Of Nucleotides
-Version: 1.12.0
+Version: 1.13.0
 Date: 2013-10-29
 Author: Christopher Cabanski, Keary Cavin, Chris Bizon
 Maintainer: Christopher Cabanski <ccabansk@genome.wustl.edu>
