@@ -1,7 +1,7 @@
 Package: ReQON
 Type: Package
 Title: Recalibrating Quality Of Nucleotides
-Version: 1.49.0
+Version: 1.49.1
 Date: 2020-09-01
 Author: Christopher Cabanski, Keary Cavin, Chris Bizon
 Maintainer: Christopher Cabanski <cabanskc@gmail.com>
@@ -13,3 +13,4 @@ Imports: rJava, graphics, stats, utils, grDevices
 Depends: R (>= 3.0.2), Rsamtools, seqbias
 Suggests: BiocStyle
 SystemRequirements: Java version >= 1.6
+PackageStatus: Deprecated
